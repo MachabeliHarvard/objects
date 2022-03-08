@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Associative array</title>
+	<style type="text/css">
+		html,body {font-size:  24px}
+	</style>
+</head>
+
+<body>
+	<h3 id="total">Total: 0</h3>
+
+	<script language="javascript">
+		var total = document.getElementById('total');
+		let menu = [];
+        menu["hotdogs"] = 4;
+        menu["fries"] = 3.50;
+        menu["soda"] =  1.50;
+        menu["sauerkraut"] = 10;
+		let order = [];
+		for (item in menu){
+			order[item] = {
+				"price": menu[item],
+				"qty": 0
+			};
+		}
+
+		function add_order_item(item_name){
+			order[item_name].qty += 1;
+			calculate_total(item_name);
+		};
+
+		function remove_order_item(item_name){
+			if (order[item_name].qty >= 1)
+				order[item_name].qty -= 1;
+			calculate_total(item_name);
+		}
+
+		function calculate_total(item_name){
+			let amount = 0;
+			for (item in order){
+				amount += order[item].price * order[item].qty;
+			}
+			total.innerText =  'Total: '+ amount;
+			let item_count = document.getElementById(item_name);
+			item_count.innerText = ` ${order[item_name].qty} `;
+		}
+		document.write("<h2> Menu </h2>")
+		for (item in order){
+			let plus = `<button onclick="add_order_item('${item}')"> + </button>`;
+			let minus = `<button onclick="remove_order_item('${item}')"> - </button>`;
+			let count = `<span id='${item}'> 0 </span>`;
+			document.write(item + " $" + order[item].price + " ");
+			document.write(plus)
+			document.write(count)
+			document.write(minus)
+			document.write('<br><br>')
+		}
+		document.write('<br>')
+	</script>
+</body>
+</html>
